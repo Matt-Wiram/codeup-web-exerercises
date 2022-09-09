@@ -75,8 +75,8 @@ function calculateTip(tip, bill) {
  * prompt the user for the bill total and a percentage they would like to tip,
  * then display the dollar amount they should tip
  */
-let tip1 = prompt("How much is the tip percentage you're going to give?");
-let bill1 = prompt("How much is the bill for the food?");
+let tip1 = parseFloat(prompt("How much is the tip percentage you're going to give?"));
+let bill1 = parseFloat(prompt("How much is the bill for the food?"));
 alert(calculateTip(tip1, bill1))
 /**
  * TODO:
