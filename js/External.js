@@ -1,4 +1,5 @@
-
+alert("Welcome to my website");
+prompt("What is your favorite color?")
 
 //You have rented some movies for your kids: The little mermaid (for 3 days),
 // Brother Bear (for 5 days, they love it), and Hercules (1 day, you don't know yet if they're
