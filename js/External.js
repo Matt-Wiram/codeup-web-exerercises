@@ -3,23 +3,23 @@
 //You have rented some movies for your kids: The little mermaid (for 3 days),
 // Brother Bear (for 5 days, they love it), and Hercules (1 day, you don't know yet if they're
 // going to like it). If price for a movie per day is $3, how much will you have to pay?
-let littleM = prompt("How many days would you like the movie?")
-let brotherB = prompt("How many days would you like the movie?")
-let hercules = prompt("How many days would you like the movie?")
+let littleM = parseInt(prompt("How many days would you like the movie?"))
+let brotherB = parseInt(prompt("How many days would you like the movie?"))
+let hercules = parseInt(prompt("How many days would you like the movie?"))
 let price = 3;
 let total = littleM * price;
 total += brotherB * price;
 total += hercules * price;
-alert("The total cost of the purchase is " + total)
+alert("The total cost of the purchase is $ " + total)
 
 
 // Suppose you're working as a contractor for 3 companies: Google, Amazon and
 // Facebook, they pay you a different rate per hour. Google pays $400, Amazon $380,
 // and Facebook $350. How much will you receive in payment for this week? You worked
 // 10 hours for Facebook, 6 hours for Google and 4 hours for Amazon.
-let faceHour = prompt("How many hours did you work for Facebook?");
-let googleHour = prompt("How many hours did you work for Google?");
-let amazonHour = prompt("How many hours did you work for Amazon?");
+let faceHour = parseInt(prompt("How many hours did you work for Facebook?"));
+let googleHour = parseInt(prompt("How many hours did you work for Google?"));
+let amazonHour = parseInt(prompt("How many hours did you work for Amazon?"));
 let total2 = (faceHour * 350) + (googleHour * 400) + (amazonHour * 380);
 alert("You've earned $" + total2);
 
