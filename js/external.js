@@ -34,7 +34,7 @@ alert("It is " + ok + " that you can enroll in this class")
 // and the offer has not expired. Premium members do not need to buy a specific amount
 // of products.
 let member = confirm('Are you a member? Click ok for yes and Cancel for no');
-let items = prompt("How many items are you buying today?");
+let items = parseInt(prompt("How many items are you buying today?"));
 let offer = confirm("is the offer not expired? Click ok for yes and Cancel for no ");
 let result = (offer && (member || items > 2))
 alert("It is " + result + " that you can get the offer")
