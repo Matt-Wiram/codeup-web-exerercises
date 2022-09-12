@@ -9,8 +9,10 @@
  * > sayHello("codeup") // returns "Hello, codeup!"
  */
 function sayHello(name) {
-    return "Hello, " + name
+    alert("Hello, " + name)
 };
+let thi = prompt("What is your name")
+sayHello(thi)
 /**
  * TODO:
  * Call the function 'sayHello' and pass your name as a string literal argument.
@@ -66,8 +68,9 @@ console.log(isTwo(random))
  * > calculateTip(0.15, 33.42) // returns 5.013
  */
 function calculateTip(tip, bill) {
+    tip /= 100;
     let total = tip * bill;
-    return total + bill
+    return total
 }
 /**
  * TODO:
@@ -93,6 +96,7 @@ alert(calculateTip(tip1, bill1))
  * > applyDiscount(45.99, 0.12) // 40.4712
  */
 function applyDiscount(price, discount) {
+    discount /= 100;
     let result = price * discount;
     return price - result
 }
