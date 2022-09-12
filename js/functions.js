@@ -100,4 +100,4 @@ function applyDiscount(price, discount) {
     let result = price * discount;
     return price - result
 }
-console.log(applyDiscount(50, .20))
+console.log(applyDiscount(50, 20))
