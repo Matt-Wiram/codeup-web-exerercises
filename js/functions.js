@@ -9,10 +9,10 @@
  * > sayHello("codeup") // returns "Hello, codeup!"
  */
 function sayHello(name) {
-    alert("Hello, " + name)
+    return "Hello, " + name
 };
-let thi = prompt("What is your name")
-sayHello(thi)
+
+sayHello("Matt")
 /**
  * TODO:
  * Call the function 'sayHello' and pass your name as a string literal argument.
@@ -70,7 +70,7 @@ console.log(isTwo(random))
 function calculateTip(tip, bill) {
     tip /= 100;
     let total = tip * bill;
-    return total
+    return "$" + total
 }
 /**
  * TODO:
@@ -96,8 +96,8 @@ alert(calculateTip(tip1, bill1))
  * > applyDiscount(45.99, 0.12) // 40.4712
  */
 function applyDiscount(price, discount) {
-    discount /= 100;
+
     let result = price * discount;
     return price - result
 }
-console.log(applyDiscount(50, 20))
+console.log(applyDiscount(50, .20))
