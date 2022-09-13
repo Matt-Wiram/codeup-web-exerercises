@@ -24,17 +24,20 @@
 /*
 function analyzeColor(color) {
     if (color === "red") {
-        console.log(color + " is the color of blood");
+        return color + " is the color of blood";
     }
     else if (color === "blue") {
-        console.log(color + " is the color of the sky");
+       return color + " is the color of the sky";
     }
     else if (color === "yellow") {
-        console.log(color + " is the color of the sun");
-    } else {
-        console.log("The color " + color + " sucks...");
+       return color + " is the color of the sun";
+    }
+    else {
+        return "The color " + color + " sucks...";
     }
 }
+
+console.log(analyzeColor('red'))
 */
 // Don't change the next two lines!
 // These lines create two variables for you:
@@ -48,27 +51,29 @@ var randomColor = colors[Math.floor(Math.random() * colors.length)];
  * Pass the `randomColor` variable to your 'analyzeColor' function and console.log the results.
  * You should see a different message every time you refresh the page
  */
-//analyzeColor(randomColor)
+//console.log(analyzeColor(randomColor))
 /**
  * TODO:
  * Comment out the code above, and refactor your function to use a switch-case statement
  */
-let color = prompt("What is your favorite color?");
-switch (color) {
-    case "red":
-        alert(color + " is the color of blood");
-        break;
-    case "blue":
-        alert(color + " is the color of the sky");
-        break;
-    case "yellow":
-        alert(color + " is the color of the sun");
-        break;
-    defualt:
-        alert(color + " is a crappy color")
+
+function analyzeColor() {
+    let color = prompt("What is your favorite color?");
+    switch (color) {
+        case "red":
+            alert(color + " is the color of blood");
+            break;
+        case "blue":
+            alert(color + " is the color of the sky");
+            break;
+        case "yellow":
+            alert(color + " is the color of the sun");
+            break;
+            defualt:
+                alert(color + " is a crappy color")
+    }
 }
-
-
+alert(analyzeColor())
 /**
  * TODO:
  * Prompt the user for a color when the page loads, and pass the input from the
