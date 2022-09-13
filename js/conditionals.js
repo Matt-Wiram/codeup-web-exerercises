@@ -176,5 +176,8 @@ function doIt() {
             alert('Thats not a number')
         }
 }
+    else {
+        alert("You're no fun")
+    }
 }
 doIt()
