@@ -121,7 +121,8 @@ function calculateTotal(n, total) {
     else if (n === 4) {
         let disc = .50 * total;
         return total - disc
-    } else {
+    }
+    else {
         return 0
     }
 }
@@ -155,21 +156,25 @@ alert(calculateTotal(luckyNumber, ind));
  * Can you refactor your code to use functions?
  * HINT: The way we prompt for a value could be improved
  */
-let truthy = confirm("Would you like to enter a number")
 
 
 
 
-function doIt(num) {
-    if (typeof num === "number") {
-        alert((num % 2 === 0) ? "Your number is even" : "Your number is odd");
-        alert("Your number plus one hundred is " + (num + 100));
-        alert((num < 0) ? "Your number is negative" : "Your number is positive")
-    } else {
-        alert("Thats not a number")
-    }
+
+function doIt() {
+    let truthy = confirm("Would you like to enter a number");
+    if (truthy) {
+        let number = parseFloat(prompt("Choose a number"))
+        if (typeof number === 'number') {
+
+
+            alert((number % 2 === 0) ? "Your number is even" : "Your number is odd");
+            alert("Your number plus one hundred is " + (number + 100));
+            alert((number < 0) ? "Your number is negative" : "Your number is positive")
+        }
+        else {
+            alert('Thats not a number')
+        }
 }
-if (truthy) {
-    let num = prompt("Choose a number")
-    alert(doIt(parseInt(num)))
 }
+doIt()
