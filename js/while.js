@@ -16,11 +16,11 @@ function iceCream() {
     var i = 0;
    do {
        let someCones = Math.floor(Math.random() * 5) + 1;
-       console.log("Here are your " + someCones + " cones")
+
 
 
        if (someCones > (allCones - i)) {
-           console.log("I dont have enough cones")
+           console.log("You asked for " + someCones + " i have only " + (allCones - i) + " left")
 
        }
        else {
