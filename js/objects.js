@@ -126,8 +126,14 @@ bookLoop(books)
      */
     function createBook(titles, authors) {
         let result = {};
-       result.title = titles;
-       result.author = authors.forEach(x => )
+        result.Title = titles;
+        result.Author = {};
+        let fullName = authors.split(" ");
+        let firstName = fullName[0];
+        let lastName = fullName[1];
+        result.Author.FirstName = firstName;
+        result.Author.LastName = lastName
+        return result
     }
 
 })();
