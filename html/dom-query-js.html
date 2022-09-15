@@ -8,6 +8,10 @@
 
 <h1 id="main-header">Hello World!</h1>
 <ul>
+    <button id="btn1" class="btn1">one</button>
+    <button id="btn2" class="btn2">two</button>
+    <button id="btn3" class="btn3">three</button>
+    <button id="btn4" class="btn4">four</button>
     <li data-dbid="1">Item 1</li>
     <li data-dbid="2">Item 2</li>
     <li data-dbid="3">Item 3</li>
@@ -32,25 +36,42 @@
          var mainHeader = document.getElementById("main-header");
 
         // TODO: Set inner html of mainHeader to "JavaScript is Cool"
+        function changeHtml() {
         mainHeader.innerHTML = "Javascript is Cool"
+        }
         // TODO: Uncomment the next line and get the sub header element by id
-         var subHeader = document.getElementById("sub-header");
+
+        var subHeader = document.getElementById("sub-header");
 
         // TODO: Set the text color of subHeader to blue
+        function addBlue() {
         subHeader.style.color = "blue";
+        }
         // TODO: Uncomment the next line and get all list items
          var listItems = document.getElementsByTagName("li");
 
         // TODO: Set text color on every other list item to grey
         // TODO: Set text color of li with dbid = 1 to blue
+        function changeColor() {
         listItems[1].style.color = "grey";
         listItems[3].style.color = "grey";
         listItems[0].style.color = "blue"
+        }
         // TODO: Uncomment the next line and get all elements with class name sub-paragraph
          var subParagraphs = document.getElementsByClassName("sub-paragraph");
 
         // TODO: Change the text in the first sub paragraph to "Mission Accomplished!"
+        function changePara() {
         subParagraphs[0].innerHTML = "Mission Accomplished!"
+        }
+        let btn1 = document.getElementById("btn1");
+        let btn2 = document.getElementById("btn2");
+        let btn3 = document.getElementById("btn3");
+        let btn4 = document.getElementById("btn4");
+        btn1.addEventListener('click', changeHtml);
+        btn2.addEventListener('click', addBlue);
+        btn3.addEventListener('click', changeColor);
+        btn4.addEventListener('click', changePara)
     })();
 </script>
 </body>
