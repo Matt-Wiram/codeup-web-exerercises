@@ -136,4 +136,10 @@ bookLoop(books)
         return result
     }
 
+    function showBookInfo(obj) {
+        obj.forEach(x => {
+            console.log("Book # " + parseInt(obj.indexOf(x) + 1) + "\n" + "Title: " + x.title + "\n" + "Author: " + x.author.firstName + " " + x.author.lastName)
+        })
+    }
+
 })();
