@@ -56,7 +56,7 @@
             if (x.amount > 200) {
                 let discount = x.amount - (x.amount * .12)
                 console.log(x.name + " spent $" + x.amount + " he gets a discount of 12% equalling $" + discount )
-            }
+             }
             else {
                 console.log(x.name + " spent " + x.amount + " and didnt get a discount so he still owes $" + x.amount )
             }

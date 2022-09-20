@@ -23,7 +23,7 @@
      * list. You will need an opening AND closing <ul> tags around the entire
      * string, and <li> tags around each planet.
      */
-    var planetsStrings = "Mercury,<br>Venus,<br>Earth,<br>Mars,<br>Jupiter,<br>Saturn,<br>Uranus,<br>Neptune";
+    var planetsStrings = console.log(planetsArray.join('<br>'))
     console.log(planetsStrings);
     var plan = "<ul><li>Mercury</li><li>Venus</li><li>Earth</li><li>Mars</li><li>Jupiter</li><li>Saturn</li><li>Uranus</li><li>Neptune</li></ul>";
     console.log(plan)
