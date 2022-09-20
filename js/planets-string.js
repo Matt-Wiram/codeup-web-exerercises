@@ -25,6 +25,6 @@
      */
     var planetsStrings = console.log(planetsArray.join('<br>'))
     console.log(planetsStrings);
-    var plan = "<ul><li>Mercury</li><li>Venus</li><li>Earth</li><li>Mars</li><li>Jupiter</li><li>Saturn</li><li>Uranus</li><li>Neptune</li></ul>";
+    var plan = "<ul>" + "<li>" + planetsArray.join("</li><li>") + '</li>' + '</ul>'
     console.log(plan)
 })();
