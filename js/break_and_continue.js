@@ -7,11 +7,11 @@ function contAndBreak() {
         }
     }
     for (let j = 1; j < 51; j++) {
-        if (j % 2 !== 0) {
-
+        if (j % 2 === 0) {
+          continue;
             if (j === odd) {
                 console.log("yikes we skipped " + odd)
-                continue;
+
             }
             console.log("Here is an odd number " + j)
         }
