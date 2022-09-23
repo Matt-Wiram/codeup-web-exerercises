@@ -1,3 +1,41 @@
+body {
+    background-image: url("https://tenor.com/view/thanos-gif-18918299");
+    background-color: gray;
+    font-family: Arial;
+}
+
 .fancy-header {
     color: purple;
+    text-align: center;
+
 }
+
+.too {
+    color: saddlebrown;
+    text-decoration: underline;
+}
+
+li {
+    list-style: square;
+}
+
+table, tr, th, td {
+    margin: auto;
+    padding: 1px;
+}
+
+a:hover {
+    color: aqua;
+}
+a:link {
+    color: chartreuse;
+}
+
+a:visited {
+    color: red;
+}
+a:active {
+    color: yellow;
+}
+
+
