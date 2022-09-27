@@ -8,35 +8,37 @@ body, html {
 
 .message-info {
     background-color: lightblue;
-    border: 1px;
+    color: blue;
+    border: 0.5px solid black;
     border-radius: 10px;
-    border-color: black;
+
     padding: 5px;
     margin: 5px;
 }
 
 .message-success {
     background-color: lightgreen;
-    border: 1px;
-    border-color: black;
+    color: green;
+    border: 0.5px solid black;
     border-radius: 10px;
     padding: 5px;
     margin: 5px;
 }
 
 .message-error {
-    background-color: lightyellow;
-    border: 1px;
-    border-color: black;
+    background-color: lightpink;
+    color: deeppink;
+
+    border: 0.5px solid black;
     border-radius: 10px;
     padding: 5px;
     margin: 5px;
 }
 
 .message-warning {
-    background-color: lightpink;
-    border: 1px;
-    border-color: black;
+    background-color: lightyellow;
+    color: darkgoldenrod;
+    border: 0.5px solid black;
     border-radius: 10px;
     padding: 5px;
     margin: 5px;
