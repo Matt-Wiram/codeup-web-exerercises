@@ -43,9 +43,7 @@ a {
     padding-bottom: .2em;
 }
 
-li:nth-child(1, 2, 3, 4) {
-   margin-right: auto;
-}
+
 
 
 
