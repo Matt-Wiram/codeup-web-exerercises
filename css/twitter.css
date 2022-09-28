@@ -98,18 +98,19 @@ a {
 }
 
 .media-image {
-    width: 50%;
-    float: inside;
+    max-width: 50px;
+    float: left;
     margin-top: 1.33em;
 }
 
 .media-body {
-    width: calc(100% - 106px);
-    float: inside;
+    width: calc(100% - 50px);
+    float: left;
 }
 
 .profile-items {
-    padding: unset;
+    padding: 0;
+    list-style-type: none;
 
 }
 
