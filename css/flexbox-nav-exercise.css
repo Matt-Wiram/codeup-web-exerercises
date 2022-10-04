@@ -23,6 +23,10 @@ nav ul {
 
 
 }
+nav li {
+    margin: .5em;
+}
+
 nav a:hover {
     color: blue;
 
