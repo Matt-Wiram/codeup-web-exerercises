@@ -1,0 +1,33 @@
+body {
+    background-color: orange;
+    margin: auto;
+
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    list-style: none;
+}
+
+
+
+li {
+    margin-right: 30px;
+}
+
+@media screen and (max-width: 391px){
+    body {
+        background-color: purple;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: right;
+        list-style: none;
+    }
+    li {
+        margin-left: 10px;
+    }
+}
