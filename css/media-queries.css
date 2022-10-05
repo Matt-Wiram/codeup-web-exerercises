@@ -89,9 +89,12 @@ footer {
     }
     .nav-links {
         flex-direction: row;
-        margin: 0 0 0 32em;
 
 
+
+    }
+    h1 {
+        margin-right: auto;
     }
     .nav-links li {
         background-color: white;
