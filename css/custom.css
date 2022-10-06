@@ -4,3 +4,21 @@
     background-size: cover;
 
 }
+.jumbotron>h1 {
+    display: flex;
+    justify-content: center;
+    text-align-all: center;
+    position: relative;
+    top: 3.5em;
+
+}
+
+li>svg {
+    position: relative;
+    left: 18em;
+}
+
+.this {
+    position: relative;
+    left: 18em;
+}
