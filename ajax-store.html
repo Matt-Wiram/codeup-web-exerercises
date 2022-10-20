@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+    <title>Online Store</title>
+</head>
+<body>
+
+<h1>My Tool Store</h1>
+
+<table id="products">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Categories</th>
+    </tr>
+    </thead>
+    <tbody id="insertProducts"></tbody>
+</table>
+<input type="button" value="Update" onclick="getData()">
+
+<input type="button" value="Store" onclick="storeData()">
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+<script>
+    function getData() {
+        "use strict";
+        // TODO: Create an AJAX GET request for the file under data/inventory.json
+        $.get('data/inventory.json',
+            {type: 'GET'}
+        ).done(function(data) {
+            $('#insertProducts').empty();
+            console.log(data);
+            data.forEach(function (stock) {
+                let row = "";
+                row += '<tr>';
+                row += '<td>' + stock.title + '</td>';
+                row += '<td>' + stock.quantity + '</td>';
+                row += '<td>' + stock.price + '</td>';
+                row += '<td>' + stock.categories.join(',') + '</td>';
+                row += '</tr>';
+                $('#insertProducts').append(row)
+
+
+            })
+        })
+
+
+
+
+
+
+        // TODO: Take the data from inventory.json and append it to the products table
+        //       HINT: Your data should come back as a JSON object; use console.log() to inspect
+        //             its contents and fields
+        //       HINT: You will want to target #insertProducts for your new HTML elements
+    };
+
+    function storeData() {
+        $.post('data/inventory.json',
+            {type: "POST"},
+            {
+                "title": "Screwdrivers",
+                "quantity": 25,
+                "categories": [
+                    "tool"
+                ],
+                "price": 10
+            }
+        ).done(function(data) {
+            console.log('completed update')
+            getData()
+        })
+    }
+</script>
+
+
+
+</body></html>
