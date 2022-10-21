@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title><!-- TODO: put your title here --></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+        .that {
+
+            background-image: url("pexels-francesco-ungaro-1526717.jpg");
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+
+        }
+        hr {
+            border: 3px solid white;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-light bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand text-light" href="#">
+            <img src="custom.svg" alt="" width="30" height="24" class="d-inline-block align-text-top text-white">
+            Bootstrap
+        </a>
+    </div>
+</nav>
+<div class="that pt-5">
+<div id="post"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+<script>
+$.get('data/blog.json',
+{type: 'GET'}
+).done(function(data) {
+$('#post').empty();
+console.log(data);
+data.forEach(function (blog) {
+let row = "";
+    row += '<div>';
+    row += '<div class="text-white">';
+    row += '<div class="text-center text-white">' + blog.title + '</div><br>';
+    row += '<div class="text-center">' + blog.date + '</div><br>';
+    row += '<div class="text-center">Categories: ' + blog.categories.join(',') + '</div><br>';
+    row += '<div class="mb-5 bg-dark">' + blog.content + '</div><br><hr>';
+    row += '</div>';
+    row += '</div>'
+$('#post').append(row)
+
+
+})
+})
+</script>
+</body>
+</html>

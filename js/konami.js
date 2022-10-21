@@ -15,6 +15,11 @@ $(document).keyup(function(event){
 function checkCheat() {
     if (JSON.stringify(cheat) === JSON.stringify(arr)) {
         alert('30 Lives have been added')
+        $('body').css('background-image', "url('ac.jpeg')", 'background-size', 'cover', 'background-attachment', 'fixed', 'background-position', 'center', 'background-repeat', 'no-repeat')
+        var audio = {};
+        audio["walk"] = new Audio();
+        audio["walk"].src = "boss-defeat.mp3"
+        audio["walk"].play();
     }
 }
 
