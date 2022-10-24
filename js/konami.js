@@ -20,6 +20,8 @@ function checkCheat() {
         audio["walk"] = new Audio();
         audio["walk"].src = "boss-defeat.mp3"
         audio["walk"].play();
+        $('body').addClass('back')
+        $('h3').addClass('invisible')
     }
 }
 

@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title><!-- TODO: put your title here --></title>
+
+
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+<style>
+    .bounce2 {
+
+        animation: bounce2 2s ease infinite;
+
+        animation-iteration-count:2;
+    }
+    @keyframes bounce2 {
+        0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+        40% {transform: translateY(-30px);}
+        60% {transform: translateY(-15px);}
+    }
+    .marker {
+
+        background-image: url('custom.svg');
+        position: absolute;
+        z-index: 100;
+        background-size: cover;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+</style>
+
+</head>
+<body>
+
+
+
+
+
+
+
+<div id='map' style='width: 100vh; height: 80vh;'></div>
+<form>
+<label id="month"></label>
+<input id="slider" type="range" min="1" max="3" step="1" value="0">
+    Address: <input id="searchbar" type="text" name="searchbar">
+    <button type="button" id="delete">Delete Markers</button>
+</form>
+<script src="JS/mapbox-geocoder-utils.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="js/api-key.js"></script>
+<script>
+
+    mapboxgl.accessToken = token;
+
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        zoom: 17,
+        center: [-80.175652, 33.018505]
+
+    });
+
+    let inform = [{
+        address: "129 S Main St, Summerville, SC 29483",
+        popupHTML: "<p>Eva's Homemade Scrumptiousness!</p><p>Service options: Dine-in · Curbside pickup · No delivery</p><p>Address: 129 S Main St, Summerville, SC 29483</p><p>Phone: (843) 873-5081</p>"
+    },
+        {
+        address: "1 Ashley Point Dr, Charleston, SC 29407",
+        popupHTML: "<p>California Dreamin!</p><p>Service options: Dine-in · Curbside pickup · No delivery</p><p>1 Ashley Point Dr, Charleston, SC 29407</p><p>Phone: (843) 766-1644</p>"
+    }, {
+        address: "1 S Main St, Greenville, SC 29601",
+        popupHTML: "<p>Sticky Fingers!</p><p>Service options: Dine-in · Curbside pickup · No-contact delivery</p><p>1 S Main St, Greenville, SC 29601</p><p>Phone: (864) 331-7427</p>"
+    }
+    ];
+
+//
+// let el = document.createElement('div')
+// let el2 = document.createElement('div')
+//     el2.classList.add('marker')
+//     el2.classList.add('bounce2')
+//     el.append(el2)
+
+
+    function placeMarkerAndPopup(info, token, map) {
+        info.forEach(x =>
+        geocode(x.address, token).then(function(coordinates) {
+            var popup = new mapboxgl.Popup()
+                .setHTML(x.popupHTML);
+
+            var marker = new mapboxgl.Marker()
+                .setLngLat(coordinates)
+
+                .addTo(map)
+                .setPopup(popup);
+                popup.addTo(map);
+            marker.togglePopup()
+
+                 markerArr.push(marker)
+
+
+
+        })
+    )
+    }
+    let output;
+    let zoomer = [5, 15, 20]
+    document.getElementById('slider').addEventListener('input', (e) => {
+        output = parseInt(e.target.value);
+        console.log(output);
+
+        map.setZoom(zoomer[output - 1]);
+    });
+    placeMarkerAndPopup(inform, token, map);
+
+    //end
+    function findLoc() {
+        let input = document.getElementById('searchbar').value;
+        if (input === undefined) {
+            geocode(input, token).then(function(coordinates) {
+
+                map.flyTo({center: [-80.175652, 33.018505]});
+
+
+            })
+        }
+
+        geocode(input, token).then(function(coordinates) {
+
+            map.flyTo({center: coordinates});
+
+
+        })
+        map.setZoom(15)
+    }
+
+
+let searchBar = document.getElementById('searchbar');
+searchBar.addEventListener('keyup', findLoc)
+
+let delettBtn = document.getElementById('delete')
+let markerArr = []
+console.log(markerArr)
+    delettBtn.addEventListener('click', function () {
+deleteAll()
+
+    })
+
+
+    function deleteAll() {
+        let loader = document.querySelectorAll('.mapboxgl-marker')
+        loader.forEach(x => {
+
+        })
+        markerArr.forEach(x => x.remove())
+    }
+//second end
+
+
+
+//     function animateMarker(timestamp) {
+//     console.log(timestamp)
+//
+//     if (timestamp < 6000) {
+//     markerArr.forEach(x => {
+//         geocode(x.address, token).then(function(coordinates) {
+//
+//
+//
+//         const radius = 2;
+//
+//         let random = timestamp / (timestamp + 2) * 2
+//
+//         x.setLngLat([
+//              -80.175652,
+//              Math.cos(timestamp / (timestamp / 3)) + 33.018505
+//         ]);
+//     })
+//
+//
+//         x.addTo(map);
+//
+//
+//         window.requestAnimationFrame(animateMarker);
+//     })
+//     }
+// else {
+//         deleteAll();
+//         placeMarkerAndPopup(inform, token, map);
+//     }
+//
+//     }
+//
+//
+//
+//
+//
+//     map.on('load', function () {
+//         window.requestAnimationFrame(animateMarker);
+//     })
+
+    map.on('load', function () {
+        let path = document.querySelectorAll("path")
+
+
+        console.log(path)
+        path.forEach(x => {
+            x.setAttribute('fill', 'red')
+            x.parentNode.classList = 'bounce2'
+        })
+
+    })
+
+
+
+</script>
+</body>
+</html>

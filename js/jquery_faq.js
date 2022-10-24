@@ -1,23 +1,38 @@
 "use strict";
 
 
-
+$('dd').toggle('false')
 
     $('dt').click(function (e) {
-
+        $('dd').toggle('false')
         $('dd').toggleClass('invisible');
+
+        $('dd').removeClass('yellow')
         $(this).next('dd').toggleClass('yellow')
     });
 
 
-    $('.highlight').click(function () {
 
-        $('h3').each(function(x, y) {
+        $('.highlight').click(function(){
 
-            $(y).next().children().last().css('background-color', 'yellow')
-        })
-    })
+            if($(this).attr('data-click-state') == 0 || $(this).attr('data-click-state') == undefined) {
+                $(this).attr('data-click-state', 1);
+                $('h3').each(function(x, y) {
 
+                    $(y).next().children().last().css('background-color', 'yellow')
+                })
+            }
+            else {
+                $(this).attr('data-click-state', 0);
+                $('h3').each(function(x, y) {
+
+                    $(y).next().children().last().css('background-color', 'white')
+                })
+            }
+        });
+
+
+    //end
     $('h3').click(function () {
         $(this).next().children().css('font-weight', 'bold')
     })

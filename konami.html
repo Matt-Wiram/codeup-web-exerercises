@@ -4,10 +4,20 @@
     <title>Konami Code</title>
     <style>
         body {
+            background-image: url("contra3.png");
 
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+
+        }
+        .back {
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
+        }
+        .invisible {
+            display: none;
         }
 
     </style>
@@ -15,7 +25,7 @@
 </head>
 <body class="img-fluid">
 <h1>Konami Code</h1>
-
+<h3 class="visible">Enter the cheat code to Win</h3>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
 <script src="js/konami.js"></script>
