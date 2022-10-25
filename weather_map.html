@@ -9,10 +9,36 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body {
+            background-color: darkgrey;
+        }
+        #data {
+            background-color: #DDDDDD;
+
+        }
+        .navbar {
+            background-color: #DDDDDD !important;
+        }
+    </style>
 </head>
 <body>
-<div id='map' class="align-content-center ml-5" style='width: 150vh; height: 60vh; margin: auto'></div>
-<div id="data" class="align-content-center"></div>
+<nav class="navbar navbar-light bg-light">
+    <span class="navbar-brand mb-0 h1">Weather App</span>
+</nav>
+<br>
+
+<div class="container" style="margin: auto">
+    <div id="data" class="row rounded" style="margin: auto"></div>
+</div>
+<form style="    margin-left: 25%;
+    margin-right:25%;
+    width: 50%;">
+<input id="searchbar" type="text" name="searchbar" value="Enter Address">
+<button type="button" id="search">Search</button>
+</form>
+<div id='map' style='width: 80vw; height: 40em; margin: auto; margin-top: 3em'></div>
+
 
 
 
@@ -21,29 +47,173 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="JS/mapbox-geocoder-utils.js"></script>
 <script src="js/api-key.js"></script>
 <script>
 
+
+
+    function fahrenheit(input) {
+     let output = (9 / 5) * input - 459.67
+        return output.toFixed(2)
+    }
+    <!--Formula for Fahrenheit-->
+
+    let superArr = []
+    let count = 5;
     $.ajax({
-        url: "http://api.openweathermap.org/data/2.5/weather",
+        url: "http://api.openweathermap.org/data/2.5/forecast",
         type: "GET",
         data: {
             APPID: OPEN_WEATHER_APPID,
-            q:     "San Antonio, US"
+            q:     "Bonneau, US"
         }
     }).done(function(data) {
-        console.log(data)
+        $('#data').empty()
+        data.list.forEach(x => {
+
+            if (count === 0) {
+
+            }
+            else {
+
+
+        let html = "";
+
+        html += '<div class="col card-header"><p class="mb-4 card-header">' + x.dt_txt.split(' ')[0] + "</p>";
+        html += '<p class="mb-2">' + fahrenheit(x.main.temp_min) + '˚F' + ' / ' + fahrenheit(x.main.temp_max) + '˚F' + '</p>';
+        html += '<img src="http://openweathermap.org/img/w/' + x.weather[0].icon + '.png">'
+        html += '<p class="mb-2">' + 'Desciption: ' + "<strong>" + x.weather[0].description + "</strong>" + '</p>';
+        html += '<p class="mb-2">' + 'Humdidity: ' + x.main.humidity + '</p>';
+        html += '<p class="mb-2"> '+ 'Wind: ' + x.wind.speed + '</p>';
+        html += '<p>' + 'Pressure: ' + x.main.pressure + '</p>'
+        html += '</div>';
+
+        $('#data').append(html)
+        count--
+    }
+        })
     });
-    let token = 'pk.eyJ1IjoibWF0dGhld3dpcmFtIiwiYSI6ImNsOWx2MWZodzE5NjQ0MXBja3Myd252cTAifQ.6opiUstEgvGb_JNLn8cuhA'
+
     mapboxgl.accessToken = token;
 
     var map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
-        zoom: 17,
-        center: [-80.175652, 33.018505]
+        zoom: 10,
+        center: [-79.9579, 33.3054]
 
     });
+
+//    start of click marker
+
+    this.marker = new mapboxgl.Marker();
+    this.map.on('click', this.addMarker.bind(this),
+    );
+
+    //start on text input
+    function findLoc() {
+        let input = document.getElementById('searchbar').value;
+        geocode(input, token).then(function(coordinates) {
+
+            map.flyTo({center: coordinates});
+
+
+        let superArr = []
+        let count = 5;
+        $.ajax({
+            url: "http://api.openweathermap.org/data/2.5/forecast",
+            type: "GET",
+            data: {
+                APPID: OPEN_WEATHER_APPID,
+                lat:    input[0],
+                lon:   input[1],
+            }
+        }).done(function(data) {
+            $('#data').empty()
+            data.list.forEach(x => {
+
+                if (count === 0) {
+
+                }
+                else {
+
+
+                    let html = "";
+
+                    html += '<div class="col card-header"><p class="mb-4 card-header">' + x.dt_txt.split(' ')[0] + "</p>";
+                    html += '<p class="mb-2">' + fahrenheit(x.main.temp_min) + '˚F' + ' / ' + fahrenheit(x.main.temp_max) + '˚F' + '</p>';
+                    html += '<img src="http://openweathermap.org/img/w/' + x.weather[0].icon + '.png">'
+                    html += '<p class="mb-2">' + 'Desciption: ' + "<strong>" + x.weather[0].description + "</strong>" + '</p>';
+                    html += '<p class="mb-2">' + 'Humdidity: ' + x.main.humidity + '</p>';
+                    html += '<p class="mb-2"> '+ 'Wind: ' + x.wind.speed + '</p>';
+                    html += '<p>' + 'Pressure: ' + x.main.pressure + '</p>'
+                    html += '</div>';
+
+                    $('#data').append(html)
+                    count--
+                }
+            })
+        });
+
+    })
+    }
+
+    let searchBar = document.getElementById('search');
+    searchBar.addEventListener('click', findLoc)
+
+
+    //end of text input adding the function addmarker
+
+
+    function addMarker(event) {
+
+        var input = event.lngLat;
+
+        this.marker.setLngLat(input).addTo(this.map);
+
+
+
+        let superArr = []
+        let count = 5;
+        $.ajax({
+            url: "http://api.openweathermap.org/data/2.5/forecast",
+            type: "GET",
+            data: {
+                APPID: OPEN_WEATHER_APPID,
+                lat:    input.lat,
+                lon:   input.lng,
+            }
+        }).done(function(data) {
+
+            $('#data').empty()
+            data.list.forEach(x => {
+
+                if (count === 0) {
+
+                }
+                else {
+
+
+                    let html = "";
+
+                    html += '<div class="col card-header"><p class="mb-4 card-header">' + x.dt_txt.split(' ')[0] + "</p>";
+                    html += '<p class="mb-2">' + fahrenheit(x.main.temp_min) + '˚F' + ' / ' + fahrenheit(x.main.temp_max) + '˚F' + '</p>';
+                    html += '<img src="http://openweathermap.org/img/w/' + x.weather[0].icon + '.png">'
+                    html += '<p class="mb-2">' + 'Desciption: ' + "<strong>" + x.weather[0].description + "</strong>" + '</p>';
+                    html += '<p class="mb-2">' + 'Humdidity: ' + x.main.humidity + '</p>';
+                    html += '<p class="mb-2"> '+ 'Wind: ' + x.wind.speed + '</p>';
+                    html += '<p>' + 'Pressure: ' + x.main.pressure + '</p>'
+                    html += '</div>';
+
+                    $('#data').append(html)
+                    count--
+                }
+            })
+        });
+
+
+    }
 </script>
 </body>
 </html>
