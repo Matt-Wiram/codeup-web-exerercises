@@ -27,18 +27,24 @@
     <span class="navbar-brand mb-0 h1">Weather App</span>
 </nav>
 <br>
-
+<br>
 <div class="container" style="margin: auto">
     <div id="data" class="row rounded" style="margin: auto"></div>
 </div>
+<div id="location" style=" position: absolute;
+  top: 50px; left: 500px;
+"></div>
 <form style="    margin-left: 25%;
     margin-right:25%;
     width: 50%;">
-<input id="searchbar" type="text" name="searchbar" value="Enter Address">
+Search Address<input id="searchbar" type="text" name="searchbar">
 <button type="button" id="search">Search</button>
 </form>
-<div id='map' style='width: 80vw; height: 40em; margin: auto; margin-top: 3em'></div>
+<div id='map' class="rounded" style='width: 80vw; height: 40em; margin: auto; margin-top: 3em'></div>
 
+
+<br>
+<br>
 
 
 
@@ -55,10 +61,10 @@
 
     function fahrenheit(input) {
      let output = (9 / 5) * input - 459.67
-        return output.toFixed(2)
+        return output.toFixed(1)
     }
     <!--Formula for Fahrenheit-->
-
+    let locale = []
     let superArr = []
     let count = 5;
     $.ajax({
@@ -69,8 +75,15 @@
             q:     "Bonneau, US"
         }
     }).done(function(data) {
+    console.log(data)
+        $('#location').empty()
+        let para = "";
+        para += '<h3>' + data.city.name + ", " + data.city.country + '</h3>';
+        $('#location').append(para)
         $('#data').empty()
         data.list.forEach(x => {
+        if (x.dt_txt.split(' ')[1] === '00:00:00') {
+
 
             if (count === 0) {
 
@@ -79,7 +92,6 @@
 
 
         let html = "";
-
         html += '<div class="col card-header"><p class="mb-4 card-header">' + x.dt_txt.split(' ')[0] + "</p>";
         html += '<p class="mb-2">' + fahrenheit(x.main.temp_min) + '˚F' + ' / ' + fahrenheit(x.main.temp_max) + '˚F' + '</p>';
         html += '<img src="http://openweathermap.org/img/w/' + x.weather[0].icon + '.png">'
@@ -88,11 +100,15 @@
         html += '<p class="mb-2"> '+ 'Wind: ' + x.wind.speed + '</p>';
         html += '<p>' + 'Pressure: ' + x.main.pressure + '</p>'
         html += '</div>';
+        // html += '<h3>' + data.city.name + '</h3>'
 
         $('#data').append(html)
         count--
     }
+
+        }
         })
+
     });
 
     mapboxgl.accessToken = token;
@@ -115,6 +131,15 @@
     function findLoc() {
         let input = document.getElementById('searchbar').value;
         geocode(input, token).then(function(coordinates) {
+            if (coordinates) {
+                var marker = new mapboxgl.Marker()
+                    .setLngLat(coordinates)
+
+                    .addTo(map)
+
+            }
+
+
 
             map.flyTo({center: coordinates});
 
@@ -130,28 +155,34 @@
                 lon:   input[1],
             }
         }).done(function(data) {
+
+            $('#location').empty()
+            let para = "";
+            para += '<h3>' + data.city.name + ", " + data.city.country + '</h3>';
+            $('#location').append(para)
             $('#data').empty()
+
             data.list.forEach(x => {
+                if (x.dt_txt.split(' ')[1] === '00:00:00') {
+                    if (count === 0) {
 
-                if (count === 0) {
-
-                }
-                else {
+                    } else {
 
 
-                    let html = "";
+                        let html = "";
 
-                    html += '<div class="col card-header"><p class="mb-4 card-header">' + x.dt_txt.split(' ')[0] + "</p>";
-                    html += '<p class="mb-2">' + fahrenheit(x.main.temp_min) + '˚F' + ' / ' + fahrenheit(x.main.temp_max) + '˚F' + '</p>';
-                    html += '<img src="http://openweathermap.org/img/w/' + x.weather[0].icon + '.png">'
-                    html += '<p class="mb-2">' + 'Desciption: ' + "<strong>" + x.weather[0].description + "</strong>" + '</p>';
-                    html += '<p class="mb-2">' + 'Humdidity: ' + x.main.humidity + '</p>';
-                    html += '<p class="mb-2"> '+ 'Wind: ' + x.wind.speed + '</p>';
-                    html += '<p>' + 'Pressure: ' + x.main.pressure + '</p>'
-                    html += '</div>';
+                        html += '<div class="col card-header"><p class="mb-4 card-header">' + x.dt_txt.split(' ')[0] + "</p>";
+                        html += '<p class="mb-2">' + fahrenheit(x.main.temp_min) + '˚F' + ' / ' + fahrenheit(x.main.temp_max) + '˚F' + '</p>';
+                        html += '<img src="http://openweathermap.org/img/w/' + x.weather[0].icon + '.png">'
+                        html += '<p class="mb-2">' + 'Desciption: ' + "<strong>" + x.weather[0].description + "</strong>" + '</p>';
+                        html += '<p class="mb-2">' + 'Humdidity: ' + x.main.humidity + '</p>';
+                        html += '<p class="mb-2"> ' + 'Wind: ' + x.wind.speed + '</p>';
+                        html += '<p>' + 'Pressure: ' + x.main.pressure + '</p>'
+                        html += '</div>';
 
-                    $('#data').append(html)
-                    count--
+                        $('#data').append(html)
+                        count--
+                    }
                 }
             })
         });
@@ -185,29 +216,32 @@
                 lon:   input.lng,
             }
         }).done(function(data) {
-
+            $('#location').empty()
+            let para = "";
+            para += '<h3>' + data.city.name + ", " + data.city.country + '</h3>';
+            $('#location').append(para)
             $('#data').empty()
             data.list.forEach(x => {
+                if (x.dt_txt.split(' ')[1] === '00:00:00') {
+                    if (count === 0) {
 
-                if (count === 0) {
-
-                }
-                else {
+                    } else {
 
 
-                    let html = "";
+                        let html = "";
 
-                    html += '<div class="col card-header"><p class="mb-4 card-header">' + x.dt_txt.split(' ')[0] + "</p>";
-                    html += '<p class="mb-2">' + fahrenheit(x.main.temp_min) + '˚F' + ' / ' + fahrenheit(x.main.temp_max) + '˚F' + '</p>';
-                    html += '<img src="http://openweathermap.org/img/w/' + x.weather[0].icon + '.png">'
-                    html += '<p class="mb-2">' + 'Desciption: ' + "<strong>" + x.weather[0].description + "</strong>" + '</p>';
-                    html += '<p class="mb-2">' + 'Humdidity: ' + x.main.humidity + '</p>';
-                    html += '<p class="mb-2"> '+ 'Wind: ' + x.wind.speed + '</p>';
-                    html += '<p>' + 'Pressure: ' + x.main.pressure + '</p>'
-                    html += '</div>';
+                        html += '<div class="col card-header"><p class="mb-4 card-header">' + x.dt_txt.split(' ')[0] + "</p>";
+                        html += '<p class="mb-2">' + fahrenheit(x.main.temp_min) + '˚F' + ' / ' + fahrenheit(x.main.temp_max) + '˚F' + '</p>';
+                        html += '<img src="http://openweathermap.org/img/w/' + x.weather[0].icon + '.png">'
+                        html += '<p class="mb-2">' + 'Desciption: ' + "<strong>" + x.weather[0].description + "</strong>" + '</p>';
+                        html += '<p class="mb-2">' + 'Humdidity: ' + x.main.humidity + '</p>';
+                        html += '<p class="mb-2"> ' + 'Wind: ' + x.wind.speed + '</p>';
+                        html += '<p>' + 'Pressure: ' + x.main.pressure + '</p>'
+                        html += '</div>';
 
-                    $('#data').append(html)
-                    count--
+                        $('#data').append(html)
+                        count--
+                    }
                 }
             })
         });
