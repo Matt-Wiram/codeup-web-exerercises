@@ -9,42 +9,40 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css' type='text/css' />
     <style>
         body {
-            background-color: darkgrey;
+            background-color: black !important;
         }
         #data {
-            background-color: #DDDDDD;
+            background-color: black;
 
         }
-        .navbar {
-            background-color: #DDDDDD !important;
-        }
+
         #location {
             margin: auto;
             text-align: center;
         }
+        body > .navbar {
+            color: black !important;
+        }
     </style>
 </head>
 <body>
-<nav class="navbar navbar-light bg-light">
+<nav class="navbar navbar-dark bg-black">
     <span class="navbar-brand mb-0 h1">Weather App</span>
 </nav>
 <br>
-<div id="location"></div>
+<div id="location" class="text-white"></div>
 <br>
 
 <div class="container" style="margin: auto">
     <div id="data" class="row rounded" style="margin: auto"></div>
 </div>
 
-<form style="    margin-left: 25%;
-    margin-right:25%;
-    width: 50%;">
-Search Address<input id="searchbar" type="text" name="searchbar">
-<button type="button" id="search">Search</button>
-</form>
-<div id='map' class="rounded" style='width: 80vw; height: 40em; margin: auto; margin-top: 3em'></div>
+
+<div id='map' class="rounded card-header" style='width: 80vw; height: 40em; margin: auto; margin-top: 3em'></div>
 
 
 <br>
@@ -79,12 +77,36 @@ Search Address<input id="searchbar" type="text" name="searchbar">
             q:     "Bonneau, US"
         }
     }).done(function(data) {
-    console.log(data)
+        console.log(data)
         $('#location').empty()
         let para = "";
         para += '<h3>' + data.city.name + ", " + data.city.country + '</h3>';
         $('#location').append(para)
         $('#data').empty()
+        if (data.list[0].weather[0].icon === '01d' || data.list[0].weather[0].icon === '02d' || data.list[0].weather[0].icon === '03d' || data.list[0].weather[0].icon === '01n' || data.list[0].weather[0].icon === '02n' || data.list[0].weather[0].icon === '03n') {
+            $('body').css('background-image', "url('sunny.jpg')");
+            $('body').css('background-size', "cover")
+
+        }
+        else if (data.list[0].weather[0].icon === '09d' || data.list[0].weather[0].icon === '10d' || data.list[0].weather[0].icon === '09n' || data.list[0].weather[0].icon === '10n') {
+            $('body').css('background-image', "url('rainy.jpg')");
+            $('body').css('background-size', "cover")
+        }
+        else if (data.list[0].weather[0].icon === '04d' || data.list[0].weather[0].icon === '03d' || data.list[0].weather[0].icon === '04n' || data.list[0].weather[0].icon === '03n' ) {
+            $('body').css('background-image', "url('cloudy.jpg')");
+            $('body').css('background-size', "cover")
+        }
+        else if (data.list[0].weather[0].icon === '11d' || data.list[0].weather[0].icon === '11d') {
+            $('body').css('background-image', "url('stormy.jpg')");
+            $('body').css('background-size', "cover")
+        }
+        else if(data.list[0].weather[0].icon === '13d'|| data.list[0].weather[0].icon === '13n' ) {
+            $('body').css('background-image', "url('snowy.jpg')");
+            $('body').css('background-size', "cover")
+        }
+        else {
+
+        }
         data.list.forEach(x => {
         if (x.dt_txt.split(' ')[1] === '15:00:00') {
 
@@ -96,7 +118,7 @@ Search Address<input id="searchbar" type="text" name="searchbar">
 
 
         let html = "";
-        html += '<div class="col card-header"><p class="mb-4 card-header">' + x.dt_txt.split(' ')[0] + "</p>";
+        html += '<div class="col card-header text-white"><p class="mb-4 card-header">' + x.dt_txt.split(' ')[0] + "</p>";
         html += '<p class="mb-2">' + fahrenheit(x.main.temp_min) + '˚F' + ' / ' + fahrenheit(x.main.temp_max) + '˚F' + '</p>';
         html += '<img src="http://openweathermap.org/img/w/' + x.weather[0].icon + '.png">'
         html += '<p class="mb-2">' + 'Desciption: ' + "<strong>" + x.weather[0].description + "</strong>" + '</p>';
@@ -124,29 +146,35 @@ Search Address<input id="searchbar" type="text" name="searchbar">
         center: [-79.9579, 33.3054]
 
     });
+    const geocoder = new MapboxGeocoder({
+        // Initialize the geocoder
+        accessToken: mapboxgl.accessToken, // Set the access token
+        mapboxgl: mapboxgl, // Set the mapbox-gl instance
+        marker: true // Do not use the default marker style
+    });
+    geocoder.on('result', function(e) {
+
+        let word = e.result.place_name
+        findLoc(e.result.center, word)
+    })
+
+
+
+    map.addControl(geocoder);
 
 //    start of click marker
 
-    this.marker = new mapboxgl.Marker();
-    this.map.on('click', this.addMarker.bind(this),
-    );
+    marker = new mapboxgl.Marker();
+    map.on('click', addMarker)
+
+
+
+
 
     //start on text input
-    function findLoc() {
-        let input = document.getElementById('searchbar').value;
-        geocode(input, token).then(function(coordinates) {
-            if (coordinates) {
-                var marker = new mapboxgl.Marker()
-                    .setLngLat(coordinates)
+    function findLoc(coordinates, str) {
 
-                    .addTo(map)
-
-            }
-
-
-
-            map.flyTo({center: coordinates});
-
+        let word = str
 
 
         let superArr = []
@@ -166,7 +194,31 @@ Search Address<input id="searchbar" type="text" name="searchbar">
             para += '<h3>' + data.city.name + ", " + data.city.country + '</h3>';
             $('#location').append(para)
             $('#data').empty()
+            console.log(data.list[0].weather[0].icon)
+            if (data.list[0].weather[0].icon === '01d' || data.list[0].weather[0].icon === '02d' || data.list[0].weather[0].icon === '03d' || data.list[0].weather[0].icon === '01n' || data.list[0].weather[0].icon === '02n' || data.list[0].weather[0].icon === '03n') {
+                $('body').css('background-image', "url('sunny.jpg')");
+                $('body').css('background-size', "cover")
 
+            }
+            else if (data.list[0].weather[0].icon === '09d' || data.list[0].weather[0].icon === '10d' || data.list[0].weather[0].icon === '09n' || data.list[0].weather[0].icon === '10n') {
+                $('body').css('background-image', "url('rainy.jpg')");
+                $('body').css('background-size', "cover")
+            }
+            else if (data.list[0].weather[0].icon === '04d' || data.list[0].weather[0].icon === '03d' || data.list[0].weather[0].icon === '04n' || data.list[0].weather[0].icon === '03n' ) {
+                $('body').css('background-image', "url('cloudy.jpg')");
+                $('body').css('background-size', "cover")
+            }
+            else if (data.list[0].weather[0].icon === '11d' || data.list[0].weather[0].icon === '11d') {
+                $('body').css('background-image', "url('stormy.jpg')");
+                $('body').css('background-size', "cover")
+            }
+            else if(data.list[0].weather[0].icon === '13d'|| data.list[0].weather[0].icon === '13n' ) {
+                $('body').css('background-image', "url('snowy.jpg')");
+                $('body').css('background-size', "cover")
+            }
+            else {
+
+            }
             data.list.forEach(x => {
                 if (x.dt_txt.split(' ')[1] === '00:00:00') {
                     if (count === 0) {
@@ -176,7 +228,7 @@ Search Address<input id="searchbar" type="text" name="searchbar">
 
                         let html = "";
 
-                        html += '<div class="col card-header"><p class="mb-4 card-header">' + x.dt_txt.split(' ')[0] + "</p>";
+                        html += '<div class="col card-header text-white"><p class="mb-4 card-header">' + x.dt_txt.split(' ')[0] + "</p>";
                         html += '<p class="mb-2">' + fahrenheit(x.main.temp_min) + '˚F' + ' / ' + fahrenheit(x.main.temp_max) + '˚F' + '</p>';
                         html += '<img src="http://openweathermap.org/img/w/' + x.weather[0].icon + '.png">'
                         html += '<p class="mb-2">' + 'Desciption: ' + "<strong>" + x.weather[0].description + "</strong>" + '</p>';
@@ -192,11 +244,12 @@ Search Address<input id="searchbar" type="text" name="searchbar">
             })
         });
 
-    })
+
+    word.value = ""
     }
 
-    let searchBar = document.getElementById('search');
-    searchBar.addEventListener('click', findLoc)
+
+
 
 
     //end of text input adding the function addmarker
@@ -206,7 +259,7 @@ Search Address<input id="searchbar" type="text" name="searchbar">
 
         var input = event.lngLat;
 
-        this.marker.setLngLat(input).addTo(this.map);
+        marker.setLngLat(input).addTo(map);
 
 
 
@@ -226,6 +279,30 @@ Search Address<input id="searchbar" type="text" name="searchbar">
             para += '<h3>' + data.city.name + ", " + data.city.country + '</h3>';
             $('#location').append(para)
             $('#data').empty()
+            if (data.list[0].weather[0].icon === '01d' || data.list[0].weather[0].icon === '02d' || data.list[0].weather[0].icon === '03d' || data.list[0].weather[0].icon === '01n' || data.list[0].weather[0].icon === '02n' || data.list[0].weather[0].icon === '03n') {
+                $('body').css('background-image', "url('sunny.jpg')");
+                $('body').css('background-size', "cover")
+
+            }
+            else if (data.list[0].weather[0].icon === '09d' || data.list[0].weather[0].icon === '10d' || data.list[0].weather[0].icon === '09n' || data.list[0].weather[0].icon === '10n') {
+                $('body').css('background-image', "url('rainy.jpg')");
+                $('body').css('background-size', "cover")
+            }
+            else if (data.list[0].weather[0].icon === '04d' || data.list[0].weather[0].icon === '03d' || data.list[0].weather[0].icon === '04n' || data.list[0].weather[0].icon === '03n' ) {
+                $('body').css('background-image', "url('cloudy.jpg')");
+                $('body').css('background-size', "cover")
+            }
+            else if (data.list[0].weather[0].icon === '11d' || data.list[0].weather[0].icon === '11d') {
+                $('body').css('background-image', "url('stormy.jpg')");
+                $('body').css('background-size', "cover")
+            }
+            else if(data.list[0].weather[0].icon === '13d'|| data.list[0].weather[0].icon === '13n' ) {
+                $('body').css('background-image', "url('snowy.jpg')");
+                $('body').css('background-size', "cover")
+            }
+            else {
+
+            }
             data.list.forEach(x => {
                 if (x.dt_txt.split(' ')[1] === '00:00:00') {
                     if (count === 0) {
@@ -235,7 +312,7 @@ Search Address<input id="searchbar" type="text" name="searchbar">
 
                         let html = "";
 
-                        html += '<div class="col card-header"><p class="mb-4 card-header">' + x.dt_txt.split(' ')[0] + "</p>";
+                        html += '<div class="col card-header text-white"><p class="mb-4 card-header">' + x.dt_txt.split(' ')[0] + "</p>";
                         html += '<p class="mb-2">' + fahrenheit(x.main.temp_min) + '˚F' + ' / ' + fahrenheit(x.main.temp_max) + '˚F' + '</p>';
                         html += '<img src="http://openweathermap.org/img/w/' + x.weather[0].icon + '.png">'
                         html += '<p class="mb-2">' + 'Desciption: ' + "<strong>" + x.weather[0].description + "</strong>" + '</p>';
