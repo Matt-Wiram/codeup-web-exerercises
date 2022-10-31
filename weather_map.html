@@ -158,7 +158,7 @@
         ❆
     </div>
 </div>
-<!--end of snowflakes start of rain-->
+<!--end of snowflakes-->
 
 
 
@@ -289,9 +289,14 @@ $('div.stormy').removeClass('rain front-row')
 
 //    start of click marker
 
-    marker = new mapboxgl.Marker();
+    marker = new mapboxgl.Marker()
 
-    map.on('click', addMarker)
+
+    // .setLngLat(feature.geometry.coordinates)
+    map.on('click', function (e) {
+
+        addMarker(e.lngLat)
+    })
 
 
 
@@ -299,6 +304,7 @@ $('div.stormy').removeClass('rain front-row')
 
     //start on text input
     function findLoc(coordinates, str) {
+
         $('div.snowflake').removeClass('snowflake')
         $('div.stormy').removeClass('rain front-row')
         $('div.stormy').empty()
@@ -322,7 +328,7 @@ $('div.stormy').removeClass('rain front-row')
             para += '<h3>' + data.city.name + ", " + data.city.country + '</h3>';
             $('#location').append(para)
             $('#data').empty()
-            console.log(data.list[0].weather[0].icon)
+
             if (data.list[0].weather[0].icon === '01d' || data.list[0].weather[0].icon === '02d' || data.list[0].weather[0].icon === '03d' || data.list[0].weather[0].icon === '01n' || data.list[0].weather[0].icon === '02n' || data.list[0].weather[0].icon === '03n') {
                 $('body').css('background-image', "url('sunny.jpg')");
                 $('body').css('background-size', "cover")
@@ -392,10 +398,10 @@ $('div.stormy').removeClass('rain front-row')
         $('div.snowflake').removeClass('snowflake')
         $('div.stormy').removeClass('rain front-row')
         $('div.stormy').empty()
-        var input = event.lngLat;
 
-        marker.setLngLat(input).addTo(map);
-        console.log(marker)
+
+        marker.setLngLat(event).addTo(map);
+
 
 
         let superArr = []
@@ -405,8 +411,8 @@ $('div.stormy').removeClass('rain front-row')
             type: "GET",
             data: {
                 APPID: OPEN_WEATHER_APPID,
-                lat:    input.lat,
-                lon:   input.lng,
+                lat:    event.lat,
+                lon:   event.lng,
             }
         }).done(function(data) {
             $('#location').empty()
@@ -494,26 +500,14 @@ var makeItRain = function() {
     }
 
     $('.rain.front-row').append(drops);
-    $('.rain.back-row').append(backDrops);
+
 }
 
-$('.splat-toggle.toggle').on('click', function() {
-    $('body').toggleClass('splat-toggle');
-    $('.splat-toggle.toggle').toggleClass('active');
-    makeItRain();
-});
 
-$('.back-row-toggle.toggle').on('click', function() {
-    $('body').toggleClass('back-row-toggle');
-    $('.back-row-toggle.toggle').toggleClass('active');
-    makeItRain();
-});
 
-$('.single-toggle.toggle').on('click', function() {
-    $('body').toggleClass('single-toggle');
-    $('.single-toggle.toggle').toggleClass('active');
-    makeItRain();
-});
+
+
+
 
 makeItRain();
 </script>
