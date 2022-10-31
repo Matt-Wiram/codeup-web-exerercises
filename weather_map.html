@@ -289,9 +289,14 @@ $('div.stormy').removeClass('rain front-row')
 
 //    start of click marker
 
-    marker = new mapboxgl.Marker()
+    marker = new mapboxgl.Marker({
+        draggable: true
+    })
 
-
+marker.on('dragend',function(e){
+    var lngLat = e.target.getLngLat();
+    addMarker(lngLat)
+})
     // .setLngLat(feature.geometry.coordinates)
     map.on('click', function (e) {
 
