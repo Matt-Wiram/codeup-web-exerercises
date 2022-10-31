@@ -47,10 +47,12 @@ const usersObj = users.filter(x => {
     }
 
 })
+console.log(usersObj);
 //map
 const usersEmails = users.map(x => {
     return x.email
 })
+console.log(usersEmails);
 //reduce
 let years = []
 users.forEach(x => years.push(x.yearsOfExperience))
@@ -58,12 +60,12 @@ const userTotalExp = years.reduce((a, b) => {
     return a + b
 }, 0);
 const userAvExp = userTotalExp / users.length;
-
+console.log(userAvExp);
 //reduce 2
 let emails = [];
 
 users.forEach(x => emails.push(x.email));
-
+console.log(emails);
 let longestEmail = emails.reduce((a, b) => {
     if (a.length >= b.length) {
         b = a
@@ -71,7 +73,7 @@ let longestEmail = emails.reduce((a, b) => {
     }
     return b
 }, 0)
-
+console.log(longestEmail)
 //reduce 3
 let names = users.map(x =>  x.name)
 let nameObject = names.reduce((name, index) => {
@@ -79,4 +81,15 @@ let nameObject = names.reduce((name, index) => {
 }, "")
 console.log('This is your instructors:' + nameObject)
 
+let languages = users.reduce((a, b) => {
+
+        b.languages.forEach(x => {
+            if (!a.includes(x)) {
+                a.push(x)
+            }
+
+        })
+    return a
+}, [])
+console.log(languages)
 
